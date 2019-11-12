@@ -1,0 +1,43 @@
+f = open("10.xml","r")
+init_data = []
+body = []
+rows = []
+subj = []
+chad = []
+A_list = []
+for line in f:
+    init_data.append(line)
+    #print(init_data)
+
+del init_data[0], init_data[0], init_data[-1]
+
+for test in init_data:
+    y = test.index("<mail>")
+    er = test.index("</mail>")
+    A_list.append(test[y:er])
+    
+
+for line in A_list:
+    o = line.index("<subj>")
+    p = line.index("</subj>")
+    m = line.index("<body>")
+    n = line.index("</body>")
+    c = line.index("<row>")
+    u = line.index("</row>") 
+    
+    
+    emp = line[m+6:n].lower()
+    emp = emp.replace("&#10;","")
+    emp = emp.replace(",", " ")
+    emp = emp.replace(".", " ")
+    emp = emp.replace(".", " ")
+    emp = emp.split()
+    for x in emp:
+        if x[0] != "&" and x != "" and len(x) > 2:
+            body.append("b-" + x  + ":" + line[c+5:u])
+
+    
+print(body)
+
+
+
