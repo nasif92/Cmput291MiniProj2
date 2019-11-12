@@ -2,6 +2,6 @@ Name of constributors with constribution:
 
 1) Nasif Hossain: I am going to look into terms.txt part of phase 1. I believe the rest of phase 1 is almost complete.
 
-2) Yazan:
+2) Yazan: Worked with Nasif on recs.py, dates.py, emails.py, and planning on taking a closer look on phase 2.
 
 3) Yan:
