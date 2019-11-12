@@ -4,4 +4,4 @@ Name of constributors with constribution:
 
 2) Yazan: Worked with Nasif on recs.py, dates.py, emails.py, and planning on taking a closer look on phase 2.
 
-3) Yan:
+3) Yan: Trying to solve terms.txt and b+ tree in phase 2
