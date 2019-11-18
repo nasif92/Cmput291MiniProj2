@@ -5,3 +5,15 @@ Name of constributors with constribution:
 2) Yazan: Worked with Nasif on recs.py, dates.py, emails.py, and planning on taking a closer look on phase 2.
 
 3) Yan: Trying to solve terms.txt and b+ tree in phase 2
+
+Sprint planning for November 18, 2019:
+
+Time chart:
+
+Monday: Fix phase 1 recs.txt and start phase 2.
+Tuesday: Phase 1 and phase 2 completion. Optional: start phase 3
+Wednesday: At least have 1/2 queries done for phase 3. Reading the stuff from Berkeley Db.
+Thursday: Last meeting before weekend. WE must start phase 3 in our machines.
+Friday: AT LEAST HAVE 80 percent (best 100%) of phase 3 done.
+on the weekends: Testing and debugging
+Sunday: make it modular and presentable. Submit my night. 
