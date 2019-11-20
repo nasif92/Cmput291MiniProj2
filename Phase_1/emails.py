@@ -8,6 +8,8 @@ A_list = []
 CC_list = []
 BCC_list = []
 
+more = []
+
 for line in f:
     init_data.append(line)
     #print(init_data)
@@ -37,13 +39,14 @@ for testy in A_list:
         cca = testy.index("</cc>")
         string = testy[cc+4:cca]
         #print(testy[cc+4:cca])
-        #if "," in string:
-            #string = string.replace(',','\n')
-            #print(string)CC_list[b] 
+        if "," in string:
+            string = string.split(",")
+            #print(string)#CC_list[b] 
 
 
         #testy[cc+4:cca]
         CC_list.append(string)
+        #print(type(CC_list))
     if "<bcc>" in testy:
         bcc = testy.index("<bcc>")
         bcca = testy.index("</bcc>")
@@ -61,20 +64,34 @@ for testy in A_list:
 
 for b in range(0,len(to_seg)):
     fro = "from-"
-    to = "to-"  
+    to = "to-"
+    string_com = ""  
     cc_string = "cc-"
     bcc_string = "bcc-"
     fro = fro + from_seg[b] + ":" + rows[b]
     to = to + to_seg[b] + ":" + rows[b]
     fro = fro + "\n" + to
     
-    #craig.brown@enron.com\n;row
-    #colleen.koenig@enron.com\njennifer.medcalf@enron.com\nsarah-joy.hunter@enron.com
+    
     if CC_list[b] != "":
+        #print(CC_list[b])
         #if "\n" in CC_list[b]:
             #CC_list[b].replace("\n",":" + rows[b]+"\n"+cc_string)
             #print(CC_list[b])
-        cc_string = cc_string + CC_list[b] + ":" + rows[b]
+        if isinstance(CC_list[b],list):
+            #print(len(CC_list[b]))
+            for i in range(len(CC_list[b])):
+                #print(i)
+                #print(CC_list[b][i])
+                string_com = cc_string + CC_list[b][i]+":"+rows[b]+"\n"
+                #print(string_com)
+            b=b+1
+                #print(string_com)
+            
+        #print(string_com)
+        string_com = cc_string + CC_list[b] + ":" + rows[b]
+        
+
         fro= fro+ "\n" + cc_string
     if BCC_list[b] != "":
         bcc_string = bcc_string + BCC_list[b] + ":" + rows[b]
@@ -98,5 +115,3 @@ g.close()
 
 
 #print(init_data)
-
-
