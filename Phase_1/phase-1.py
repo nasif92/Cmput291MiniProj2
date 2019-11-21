@@ -1,17 +1,26 @@
+import datetime, sys
 def main():
-	f = open("1k.xml","r")
+	a = datetime.datetime.now()
+	file = sys.argv[1]
+	if file == "":
+		print("No file given or present")
+	else:
+		f = open(file,"r")
 
-	init_data = []
-		
-	for line in f:
-		init_data.append(line)
+		init_data = []
+			
+		for line in f:
+			init_data.append(line)
 
-	# each function is passed in the init data from the file
-	create_emails(init_data)
-	create_terms(init_data)
-	create_records(init_data)
-	create_dates(init_data)
-	f.close()
+		# each function is passed in the init data from the file
+		create_emails(init_data)
+		create_terms(init_data)
+		create_records(init_data)
+		create_dates(init_data)
+		f.close()
+		b = datetime.datetime.now()
+		print("Total time required: %s" %(b-a))
+
 
 def create_emails(init_data):
 	# work for emails.txt
@@ -50,12 +59,7 @@ def create_emails(init_data):
 			bcc = testy.index("<bcc>")
 			bcca = testy.index("</bcc>")
 			BCC_list.append(testy[bcc+5:bcca])
-		
-	# print("FROM", from_seg)
-	# print("TO", to_seg)
-	# print("ROWS", rows)
-	# print("CC", CC_list)
-	# print("BCC", BCC_list)
+
 
 
 	for b in range(0,len(to_seg)):
@@ -78,8 +82,9 @@ def create_emails(init_data):
 
 	g = open("email10.txt","w+")
 
-	for i in range(0,len(chad)):
+	for i in range(0,len(chad) - 1):
 		g.write(chad[i]+ "\n")
+	g.write(chad[len(chad) - 1])
 	g.close()
 
 
@@ -103,13 +108,13 @@ def create_dates(init_data):
 		v = v + date[i] + ":" + rows[i]
 		date_list.append(v)
 		
-	# print(date_list)
 
 	g = open("dates10.txt","w+")
 
-	for i in range(0,len(date_list)):
+	for i in range(0,len(date_list) - 1):
 		g.write(date_list[i]+ "\n")
-
+	
+	g.write(date_list[len(date_list) - 1])
 	g.close()
 
 	# work for recs.txt
@@ -135,9 +140,9 @@ def create_records(init_data):
 
 	g = open("recs10.txt","w+")
 
-	for i in range(0,len(chad)):
+	for i in range(0,len(chad) - 1):
 		g.write(chad[i]+ "\n")  
-	
+	g.write(chad[len(chad) - 1])
 	g.close()
 
 
@@ -255,11 +260,10 @@ def create_terms(init_data):
 			if x != "" and len(x) > 2:
 				body.append("b-" + x  + ":" + line[c+5:u])
 				
-	g = open("1k-output.txt","w+")
+	g = open("terms.txt","w+")
 				
-	for i in range(0,len(body)):
+	for i in range(0,len(body) - 1):
 		g.write(body[i]+ "\n")
-
+	g.write(body[len(body) - 1])
 	g.close()
 main()
-
