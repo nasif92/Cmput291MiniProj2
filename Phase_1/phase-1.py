@@ -26,13 +26,6 @@ def create_emails(init_data):
 	# work for emails.txt
 	
 	email_list = []
-	from_seg = []
-	to_seg = []
-	CC_list = []
-	BCC_list = []
-	rows = []
-	chad = []
-
 
 	del init_data[0], init_data[0], init_data[-1]
 
@@ -40,51 +33,48 @@ def create_emails(init_data):
 		y = test.index("<mail>")
 		er = test.index("</mail>")
 		email_list.append(test[y:er])
+		
+	g = open("email10.txt","w+")
 
 	for testy in email_list:
 		m = testy.index("<from>")
 		n = testy.index("</from>")
-		o = testy.index("<to>")
-		p = testy.index("</to>")
+		t_o = testy.find("<to>")
+		t_p = testy.find("</to>")
 		c = testy.index("<row>")
 		u = testy.index("</row>")
-		from_seg.append(testy[m+6:n])
-		to_seg.append(testy[o+4:p])
-		rows.append(testy[c+5:u])   
-		if "<cc>" in  testy:
-			cc = testy.index("<cc>")
-			cca = testy.index("</cc>")
-			CC_list.append(testy[cc+4:cca])
-		if "<bcc>" in testy:
-			bcc = testy.index("<bcc>")
-			bcca = testy.index("</bcc>")
-			BCC_list.append(testy[bcc+5:bcca])
+		cc = testy.find("<cc>")
+		cc_end = testy.find("</cc>")
+		bcc = testy.find("<bcc>")
+		bcc_end = testy.find("</bcc>")
 
-
-
-	for b in range(0,len(to_seg)):
-		fro = "from-"
-		to = "to-"  
-		cc_string = "cc-"
-		bcc_string = "bcc-"
-		fro = fro + from_seg[b] + ":" + rows[b]
-		to = to + to_seg[b] + ":" + rows[b]
-		fro = fro + "\n" + to
+		row_num = testy[c+5:u]
+		g.write("from-" + testy[m+6:n] +":"  +  row_num + "\n")
 		
-		if CC_list[b] != "":
-			cc_string = cc_string + CC_list[b] + ":" + rows[b]
-			fro= fro+ "\n" + cc_string
-		if BCC_list[b] != "":
-			bcc_string = bcc_string + BCC_list[b] + ":" + rows[b]
-			fro = fro +"\n"+bcc_string
-		chad.append(fro)
+		# for to
+		to = testy[t_o+4:t_p].split(',')
+		to_str = ""
+		for x in to:
+			if x != "":
+				to_str +=  "to-" + x  + ":"  + row_num + "\n"
+		g.write(to_str)
 
+		# for cc
+		cc_str = ""
+		cc = testy[cc+4:cc_end].split(',')
+		for x in cc:
+			if x != "":
+				cc_str += "cc-" + x + ":" + row_num + "\n"
+		g.write(cc_str)
 
-	g = open("email10.txt","w+")
+		# for bcc
+		bcc_str = ""
+		bcc = testy[bcc+5:bcc_end].split(',')
+		for x in bcc:
+			if x != "":
+				bcc_str += "bcc-" + x + ":" + row_num + "\n"
+		g.write(bcc_str)
 
-	for i in range(0,len(chad) - 1):
-		g.write(chad[i]+ "\n")
-	g.write(chad[len(chad) - 1])
 	g.close()
 
 
