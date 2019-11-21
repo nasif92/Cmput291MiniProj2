@@ -34,7 +34,7 @@ def create_emails(init_data):
 		er = test.index("</mail>")
 		email_list.append(test[y:er])
 		
-	g = open("email10.txt","w+")
+	g = open("emails.txt","w+")
 
 	for testy in email_list:
 		m = testy.index("<from>")
@@ -99,12 +99,11 @@ def create_dates(init_data):
 		date_list.append(v)
 		
 
-	g = open("dates10.txt","w+")
+	g = open("dates.txt","w+")
 
-	for i in range(0,len(date_list) - 1):
+	for i in range(0,len(date_list)):
 		g.write(date_list[i]+ "\n")
 	
-	g.write(date_list[len(date_list) - 1])
 	g.close()
 
 	# work for recs.txt
@@ -128,11 +127,10 @@ def create_records(init_data):
 		chad.append(v)
 		
 
-	g = open("recs10.txt","w+")
+	g = open("recs.txt","w+")
 
-	for i in range(0,len(chad) - 1):
+	for i in range(0,len(chad)):
 		g.write(chad[i]+ "\n")  
-	g.write(chad[len(chad) - 1])
 	g.close()
 
 
@@ -252,8 +250,7 @@ def create_terms(init_data):
 				
 	g = open("terms.txt","w+")
 				
-	for i in range(0,len(body) - 1):
+	for i in range(0,len(body) ):
 		g.write(body[i]+ "\n")
-	g.write(body[len(body) - 1])
 	g.close()
 main()
