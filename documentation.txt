@@ -12,6 +12,11 @@ We need to use perl the break.pl using perl break.pl < dates.txt
   then got the index as : db_load -T -c duplicates=1 -f emails.txt -t btree em.idx
   4) sorted terms.txt as sort -u terms.txt -o terms.txt.
   then got the index as: 
+  
+  todo's: sort the rest of the files and get the index files generated.
+  Get the base for Berkeley db done.
+  Do the first couple of queries.
+  
 2) Yazan: Worked with Nasif on recs.py, dates.py, emails.py, and planning on taking a closer look on phase 2.
 
 3) Yan: Trying to solve terms.txt and b+ tree in phase 2
