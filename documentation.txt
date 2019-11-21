@@ -1,7 +1,17 @@
 Name of constributors with constribution:
 
-1) Nasif Hossain: I helped a bit on the implementation of phase 1. And put the code together and more presentable for phase-1.
+1) Nasif Hossain: I helped a bit on the implementation of phase 1. And put the code together and more presentable for phase-1. Finished phase 1 error checks and mainly email.txt.
 
+For phase 2:
+We need to use perl the break.pl using perl break.pl < dates.txt
+  1) sorted dates.txt using sort -u dates.txt -o dates.txt.
+  Then got the index as: db_load -T -c duplicates=1 -f dates.txt -t btree da.idx
+  2) sorted recs.txt using sort -nu recs.txt -o recs.txt.
+  then got the index as : db_load -T -c duplicates=1 -f recs.txt -t hash re.idx
+  3) sorted emails.txt using sort -u email10.txt -o sortedemails.txt
+  then got the index as : db_load -T -c duplicates=1 -f emails.txt -t btree em.idx
+  4) sorted terms.txt as sort -u terms.txt -o terms.txt.
+  then got the index as: 
 2) Yazan: Worked with Nasif on recs.py, dates.py, emails.py, and planning on taking a closer look on phase 2.
 
 3) Yan: Trying to solve terms.txt and b+ tree in phase 2
