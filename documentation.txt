@@ -1,6 +1,6 @@
 Name of constributors with constribution:
 
-1) Nasif Hossain: I helped a bit on the implementation of phase 1. And put the code together and more presentable for phase-1.
+1) Nasif Hossain: I helped a bit on the implementation of phase 1. And put the code together and more presentable for phase-1. Finished phase 1 error checks and mainly email.txt.
 
 2) Yazan: Worked with Nasif on recs.py, dates.py, emails.py, and planning on taking a closer look on phase 2.
 
