@@ -38,4 +38,16 @@ Wednesday: At least have 1/2 queries done for phase 3. Reading the stuff from Be
 Thursday: Last meeting before weekend. WE must start phase 3 in our machines.
 Friday: AT LEAST HAVE 80 percent (best 100%) of phase 3 done.
 on the weekends: Testing and debugging
-Sunday: make it modular and presentable. Submit my night. 
+Sunday: make it modular and presentable. Submit my night.
+
+
+
+
+
+Main design:
+
+1) First user inputs query / queries.
+
+2) We check validity of the queries.
+
+3) 
