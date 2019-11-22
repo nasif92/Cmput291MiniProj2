@@ -3,15 +3,22 @@ Name of constributors with constribution:
 1) Nasif Hossain: I helped a bit on the implementation of phase 1. And put the code together and more presentable for phase-1. Finished phase 1 error checks and mainly email.txt.
 
 For phase 2:
-We need to use perl the break.pl using perl break.pl < dates.txt
+  We need to use perl the break.pl everytime after sorting 
+  using perl break.pl < dates.txt > dates_formatted.txt
+  
+  To do for getting the index files:
+  
   1) sorted dates.txt using sort -u dates.txt -o dates.txt.
-  Then got the index as: db_load -T -c duplicates=1 -f dates.txt -t btree da.idx
+  Then got the index as: db_load -T -c duplicates=1 -f dates_formatted.txt -t btree da.idx
   2) sorted recs.txt using sort -nu recs.txt -o recs.txt.
-  then got the index as : db_load -T -c duplicates=1 -f recs.txt -t hash re.idx
+  then got the index as : db_load -T -c duplicates=1 -f recs_formatted.txt -t hash re.idx
   3) sorted emails.txt using sort -u email10.txt -o sortedemails.txt
-  then got the index as : db_load -T -c duplicates=1 -f emails.txt -t btree em.idx
+  then got the index as : db_load -T -c duplicates=1 -f emails_formatted.txt -t btree em.idx
   4) sorted terms.txt as sort -u terms.txt -o terms.txt.
-  then got the index as: 
+  then got the index as : db_load -T -c duplicates=1 -f terms_formatted.txt -t btree te.idx
+  
+  Then do a db_dump -p te.idx > te.txt  to view what your file when done indexing looks like!
+  
   
   todo's: sort the rest of the files and get the index files generated.
   Get the base for Berkeley db done.
