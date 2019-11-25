@@ -23,10 +23,10 @@ def break_user_input(user_input):
                     elif i == len(query) - 1:
                         ca[list_index] = ca[list_index] + ca[list_index + 1]
                         del ca[list_index + 1]
-        return ca
+    return ca
 
 
-def checkvalidity(query):
+def check_validity(query):
     # Here is where we check if the query is valid
     
     # Is it a date? we check here with an emphasis on split.
@@ -73,13 +73,12 @@ def checkvalidity(query):
                     return "emailquery"
                 return None
                 
-    term_prefix = ["subject" , "body"] # If not email, check for term.
+    term_prefix = ["subj" , "body"] # If not email, check for term.
     term = query.split(":")
     if len(term) == 2: # Split and check like before
         for prefix in term_prefix:
-            if term[0] in prefix:
+            if term[0] == prefix:
                 if term[1][-1] == "%" or term[1][-1].isalnum():
-                    #print(term[1][-1])
                     return "termquery"
                 else: 
                     return None
@@ -205,8 +204,7 @@ def query_test(prefix, term, output): #OPENS UP IDX FILES AND GETS ANY MATCHES A
             
     
 
-    #for i in test:
-        #print(i)
+ 
     vs = []
     curs.close()
     database.close()  
@@ -220,10 +218,7 @@ def query_test(prefix, term, output): #OPENS UP IDX FILES AND GETS ANY MATCHES A
     if output == "printbriefly":           
         for value in test:
             iter = curs.first()   
-            #if iter[0] == the key of test at the specific index
             while iter:
-                #print(int(test.get(value)))
-                #print(iter[0].decode())
                 if prefix == "s-" or prefix == "b-" or prefix == "":
                     if int(iter[0].decode()) == int(test.get(value)):
                         list_pair = {}
@@ -300,7 +295,6 @@ def query_test(prefix, term, output): #OPENS UP IDX FILES AND GETS ANY MATCHES A
                         vs.append(list_pair)
                         iter = curs.next()     
                         
-    
     return vs
             
         
@@ -323,7 +317,6 @@ def multi_query(mq,output):
                 set_to_compare.add(key)
         first_set = first_set & set_to_compare
         
-
     for i in range(0,50):
         print("=", end="")
     print("")  
@@ -351,50 +344,35 @@ def multi_query(mq,output):
             print("=", end="")
         print("")        
     
-
     
+    
+        
+        
 def main():
+    # Setting up the loop and output to brief here.
     loop = True
     output_type = "printbriefly"
-    print(
-'''
-Welcome to Our program
-As you might know already, we are using Berkeley db
-
-So this is the set of input types we can take with any of our index files
-
-1.  subj:gas
-2.  subj:gas body:earning
-3.  confidential%
-4.  from:phillip.allen@enron.com
-5.  to:phillip.allen@enron.com
-6.  to:kenneth.shulklapper@enron.com  to:keith.holst@enron.com
-7.  date:2001/03/15
-8.  date>2001/03/10
-9.  bcc:derryl.cleaveland@enron.com  cc:jennifer.medcalf@enron.com
-10. body:stock  confidential  shares  date<2001/04/12
-''')
-
+    
     while loop:
-        all_query_result = []
-        allow_query = True
-        user_input = str(input("Enter q to exit, otherwise enter a valid query: "))
+        
+        all_query_result = []   # The list that will contain seperate results of all individual queries
+        allow_query = True  # To check if any syntax has been violated.
+        user_input = str(input("Enter !q! to exit, otherwise enter a valid query: "))
         user_input = user_input.lower()
-        if user_input == 'q':
+        if user_input == '!q!':
             loop = False
             print("Exiting Program....")
         else:
-            # todo: user queries
-            user_queries = break_user_input(user_input)
-            query_type = []
-            for i in user_queries:
-                #print(checkvalidity(i.lower()))
+            user_queries = break_user_input(user_input) # If user enters queries with extra spacing, it is handled here.
+            query_type = [] # List containing the types of queries we get from the input
+            
+            for i in user_queries: #For each query inputted, we check to see if it follows the syntax via check_validity function.
                 
-                query_type.append(checkvalidity(i.lower()))
+                query_type.append(check_validity(i.lower()))
                 # query type is only going to append if it's a va;id query
             
             
-            for i in query_type:
+            for i in query_type:    
                 if i == None:
                     print("One of the queries are invalid, please try again")
                     allow_query = False
