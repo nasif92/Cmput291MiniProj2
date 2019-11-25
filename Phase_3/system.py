@@ -5,24 +5,33 @@ from datetime import *
 # breaks the user input into specific queries
 def break_user_input(user_input):
     # taking into fact that if there is a colon that doesn't separate the stuff
-    headers = [":",">","<"]
     ca = user_input.split(" ")
+    headers = [":","<",">"]
     while "" in ca:
         ca.remove("")
-    for header in headers:
-        for query in ca:
-            if header in query:
-                if len(query) == 1:
-                    i = ca.index(header)
-                    ca[i-1:i+2] = ["".join(ca[i-1:i+2])]
-                else:
-                    i = query.index(header)
-                    list_index = ca.index(query)
-                    if i == 0:
-                        ca[list_index-1:list_index+1] = ["".join(ca[list_index-1:list_index+1])]
-                    elif i == len(query) - 1:
-                        ca[list_index] = ca[list_index] + ca[list_index + 1]
-                        del ca[list_index + 1]
+
+    for query in ca:
+	    for header in headers:
+		    if header in query:
+			    if len(query) == 1:
+				    i = ca.index(header)
+				    ca[i-1:i+2] = ["".join(ca[i-1:i+2])]
+    for query in ca:
+    	pos = 0
+    	for header in headers:
+    		if header in query and len(query) > 1:
+    			if query.index(header) == 0:
+    				pos = ca.index(query)
+    				ca[pos-1] = ca[pos-1] + ca[pos]
+    				ca[pos] = ""
+    			elif query.index(header) == len(query) -1:
+    				pos = ca.index(query)
+    				ca[pos] = ca[pos] + ca[pos + 1]
+    				ca[pos + 1] = ""
+	
+    while "" in ca:
+        ca.remove("")
+				
     return ca
 
 
