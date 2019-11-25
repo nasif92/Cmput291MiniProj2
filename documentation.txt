@@ -50,4 +50,4 @@ Main design:
 
 2) We check validity of the queries.
 
-3) 
+3) Then process query does the rest of the work for us.
