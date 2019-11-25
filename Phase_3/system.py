@@ -97,7 +97,8 @@ def check_validity(query):
                 return "printbriefly"
             else:
                 return None
-                     
+
+# this function puts the correct prefixes for the queries for moving to the next phase      
 def process_query(query,Type):
     
     if Type == "termquery":
@@ -126,9 +127,9 @@ def process_query(query,Type):
             if len(datePrefix) == 2:
                 chosen = typ
                 return chosen, datePrefix[1] 
-    
-def query_test(prefix, term, output): #OPENS UP IDX FILES AND GETS ANY MATCHES AND PRINTS IT OUT
-    
+
+# OPENS UP IDX FILES AND GETS ANY MATCHES AND PRINTS IT OUT    
+def query_test(prefix, term, output):   
     datetype = [':' , '>=' , '<=', '>' , '<']
     for typ in datetype:
         if prefix == typ:  
@@ -144,7 +145,6 @@ def query_test(prefix, term, output): #OPENS UP IDX FILES AND GETS ANY MATCHES A
             curs = database.cursor()
             iter = curs.first() 
             while iter:
-                #print(iter)
                 date_to_compare = iter[0].decode().split("/")
                 year2 = int(date_to_compare[0])
                 month2 = int(date_to_compare[1])
@@ -188,7 +188,8 @@ def query_test(prefix, term, output): #OPENS UP IDX FILES AND GETS ANY MATCHES A
                 if re.search(r'\b' + term + r'\b', term_to_compare) and prefix in term_to_compare[0:2]: # THIS GOES TO TE.IDX FILE
                     test[iter[0].decode()] = iter[1].decode()
                 iter = curs.next()
-                
+
+    # this part works for checking emails           
     elif prefix == "from" or prefix == "to" or prefix == "bcc" or prefix == "cc":
         database = db.DB() #handle for Berkeley DB database
         test = {}
@@ -203,18 +204,15 @@ def query_test(prefix, term, output): #OPENS UP IDX FILES AND GETS ANY MATCHES A
             iter = curs.next()
             
     
-
- 
     vs = []
     curs.close()
     database.close()  
-    result = {}
     database = db.DB()
     DB_File = "re.idx"
     database.open(DB_File ,None, db.DB_HASH, db.DB_CREATE)    
     curs = database.cursor()
     
-     
+    # if output type is brief, check the required prefixes and generate the row id's
     if output == "printbriefly":           
         for value in test:
             iter = curs.first()   
@@ -259,15 +257,11 @@ def query_test(prefix, term, output): #OPENS UP IDX FILES AND GETS ANY MATCHES A
                             vs.append(list_pair)
                         iter = curs.next()           
         
-                        # Send to a function
                     
     else:
         for value in test:
             iter = curs.first()   
-            #if iter[0] == the key of test at the specific index
             while iter:
-                #print(int(test.get(value)))
-                #print(iter[0].decode())
                 if prefix == "s-" or prefix == "b-" or prefix == "":
                     if int(iter[0].decode()) == int(test.get(value)):
                         list_pair = {}
@@ -296,12 +290,10 @@ def query_test(prefix, term, output): #OPENS UP IDX FILES AND GETS ANY MATCHES A
                         iter = curs.next()     
                         
     return vs
-            
-        
+              
     
-    
+# works for multiple queries 
 def multi_query(mq,output):
-    final = []
     sq = mq[0]
     first_set = {1}
     first_set.remove(1)
@@ -323,7 +315,6 @@ def multi_query(mq,output):
     if output == "printbriefly":
         for val in first_set:
             for key in sq:
-                #print(key)
                 for keys in key:
                     if val == keys:
                         print("Row ID: #" + keys + ", Subject: " +  key[keys])
@@ -335,7 +326,6 @@ def multi_query(mq,output):
     else:
         for val in first_set:
             for key in sq:
-                        #print(key)
                 for keys in key:
                     if val == keys:
                         print( "Full Unparsed Record for Row ID # " + keys + ": "+  key[keys])        
@@ -344,15 +334,31 @@ def multi_query(mq,output):
             print("=", end="")
         print("")        
     
-    
-    
-        
+       
         
 def main():
-    # Setting up the loop and output to brief here.
+    # Setting up the loop and output to default brief here.
     loop = True
     output_type = "printbriefly"
-    
+    print(
+'''
+Welcome to Our program
+As you might know already, we are using Berkeley db
+
+So this is the set of input types we can take with any of our index files
+
+1.  subj:gas
+2.  subj:gas body:earning
+3.  confidential%
+4.  from:phillip.allen@enron.com
+5.  to:phillip.allen@enron.com
+6.  to:kenneth.shulklapper@enron.com  to:keith.holst@enron.com
+7.  date:2001/03/15
+8.  date>2001/03/10
+9.  bcc:derryl.cleaveland@enron.com  cc:jennifer.medcalf@enron.com
+10. body:stock  confidential  shares  date<2001/04/12
+''')
+
     while loop:
         
         all_query_result = []   # The list that will contain seperate results of all individual queries
@@ -393,7 +399,7 @@ def main():
                     allow_query = False
                     for i in range(0,50):
                         print("=", end="")                    
-                    print('\nNOTE: You have changed the output to full.\nYou will only get the full UNPARSED record of any matches.\nTo change to a more brief output, type in "output=brief".')
+                    print('\nNOTE: You have changed the output to full.\nYou will get the full UNPARSED record of any matches.\nTo change to a more brief output, type in "output=brief".')
                     for i in range(0,50):
                         print("=", end="")
                     print("")                    
@@ -401,13 +407,10 @@ def main():
             if allow_query: #if we didn't specify brief or full in the query
                 for i in range(0,len(user_queries)):
                     to_do.append(process_query(user_queries[i], query_type[i]))
-                
-            #print(to_do)
-            
+                            
                 for tupl in to_do:
                     all_query_result.append(query_test(tupl[0],tupl[1], output_type))
-                    
-                    
+                                        
                 multi_query(all_query_result,output_type)
             
 main()
